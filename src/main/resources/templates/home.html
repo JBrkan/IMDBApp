@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>ImdbApp</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">IMDBApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/api/home}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/api/search}">Search</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" th:text="${'Welcome, ' +userInfo}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">LOGOUT</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<p th:if="${watchedMovies.isEmpty}">Add movies to display them here</p>
+<table class="table">
+    <tr>
+        <th scope="col">Image</th>
+        <th scope="col">Title</th>
+    </tr>
+    <tr th:each="movie : ${watchedMovies}">
+        <td class="align-middle"><img width="270px" height="400px" th:src="${movie.movieImage}"></td>
+        <td class="align-middle" th:text="${movie.movieName}"></td>
+    </tr>
+
+</table>
+
+
+</body>
+</html>

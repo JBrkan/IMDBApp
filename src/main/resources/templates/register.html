@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/register/add}" th:object="${newUser}" method="post">
+    <ul th:each="msg : ${msgList}">
+        <li th:text="${msg}"></li>
+    </ul>
+    <br>
+    <label for="username">Username:</label><input type="text" id="username" th:field="*{userName}"/>
+    <br>
+    <label for="password">Password:</label><input type="password" id="password" th:field="*{passWord}"/>
+    <br>
+    <input type="submit" value="Register">
+</form>
+
+</body>
+</html>
