@@ -1,7 +1,7 @@
-package com.imdbapp.Services;
+package com.imdbapp.services;
 
-import com.imdbapp.DataModels.Authentication.AuthUserDetails;
-import com.imdbapp.Exceptions.UserDoesntExistException;
+import com.imdbapp.datamodels.AuthUserDetails;
+import com.imdbapp.exceptions.UserDoesntExistException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

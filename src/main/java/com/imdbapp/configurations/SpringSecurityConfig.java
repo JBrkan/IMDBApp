@@ -1,4 +1,4 @@
-package com.imdbapp.Configurations;
+package com.imdbapp.configurations;
 
 
 import org.springframework.beans.factory.annotation.Qualifier;

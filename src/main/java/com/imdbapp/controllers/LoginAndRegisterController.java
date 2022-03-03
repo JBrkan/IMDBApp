@@ -1,7 +1,7 @@
-package com.imdbapp.Controllers;
+package com.imdbapp.controllers;
 
-import com.imdbapp.DataModels.DatabaseModel.Users;
-import com.imdbapp.Services.UserService;
+import com.imdbapp.datamodels.databasemodel.Users;
+import com.imdbapp.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

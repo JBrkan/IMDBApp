@@ -1,11 +1,11 @@
-package com.imdbapp.Services;
+package com.imdbapp.services;
 
-import com.imdbapp.DataModels.DatabaseModel.Movies;
-import com.imdbapp.DataModels.DatabaseModel.Users;
-import com.imdbapp.DataModels.ImdbApiCallSearchModel.Result;
-import com.imdbapp.DataModels.ImdbApiCallSearchModel.SearchResults;
-import com.imdbapp.Exceptions.ApiCallFailedException;
-import com.imdbapp.Exceptions.UserDoesntExistException;
+import com.imdbapp.datamodels.databasemodel.Movies;
+import com.imdbapp.datamodels.databasemodel.Users;
+import com.imdbapp.datamodels.imdbapicallsearchmodel.Result;
+import com.imdbapp.datamodels.imdbapicallsearchmodel.SearchResults;
+import com.imdbapp.exceptions.ApiCallFailedException;
+import com.imdbapp.exceptions.UserDoesntExistException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

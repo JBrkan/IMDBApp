@@ -1,11 +1,11 @@
-package com.imdbapp.Controllers;
+package com.imdbapp.controllers;
 
 
-import com.imdbapp.DataModels.ImdbApiCallSearchModel.SearchResults;
-import com.imdbapp.Exceptions.UserDoesntExistException;
-import com.imdbapp.Services.SearchService;
-import com.imdbapp.Services.UserRepository;
-import com.imdbapp.Services.UserService;
+import com.imdbapp.datamodels.imdbapicallsearchmodel.SearchResults;
+import com.imdbapp.exceptions.UserDoesntExistException;
+import com.imdbapp.services.SearchService;
+import com.imdbapp.services.UserRepository;
+import com.imdbapp.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;

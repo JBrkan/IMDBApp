@@ -1,4 +1,4 @@
-package com.imdbapp.DataModels.DatabaseModel;
+package com.imdbapp.datamodels.databasemodel;
 
 import javax.persistence.*;
 

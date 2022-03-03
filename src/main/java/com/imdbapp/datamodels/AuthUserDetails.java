@@ -1,6 +1,6 @@
-package com.imdbapp.DataModels.Authentication;
+package com.imdbapp.datamodels;
 
-import com.imdbapp.DataModels.DatabaseModel.Users;
+import com.imdbapp.datamodels.databasemodel.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

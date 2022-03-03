@@ -1,6 +1,6 @@
-package com.imdbapp.Services;
+package com.imdbapp.services;
 
-import com.imdbapp.DataModels.DatabaseModel.Users;
+import com.imdbapp.datamodels.databasemodel.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

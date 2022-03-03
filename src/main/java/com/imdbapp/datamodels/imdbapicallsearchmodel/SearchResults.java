@@ -1,4 +1,4 @@
-package com.imdbapp.DataModels.ImdbApiCallSearchModel;
+package com.imdbapp.datamodels.imdbapicallsearchmodel;
 
 import java.util.List;
 
@@ -43,9 +43,6 @@ public class SearchResults {
     }
 
     public boolean resultsIsNull(){
-        if(this.results.isEmpty()){
-            return true;
-        }
-        return false;
+        return this.results.isEmpty();
     }
 }

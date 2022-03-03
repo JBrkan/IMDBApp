@@ -1,17 +1,14 @@
-package com.imdbapp.ControllerAdvice;
+package com.imdbapp.controlleradvice;
 
 
-import com.imdbapp.DataModels.DatabaseModel.Users;
-import com.imdbapp.Exceptions.*;
+import com.imdbapp.datamodels.databasemodel.Users;
+import com.imdbapp.exceptions.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @ControllerAdvice

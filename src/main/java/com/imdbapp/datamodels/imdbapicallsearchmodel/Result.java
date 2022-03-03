@@ -1,4 +1,4 @@
-package com.imdbapp.DataModels.ImdbApiCallSearchModel;
+package com.imdbapp.datamodels.imdbapicallsearchmodel;
 
 public class Result {
 

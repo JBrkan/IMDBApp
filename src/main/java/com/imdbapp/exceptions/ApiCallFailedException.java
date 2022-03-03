@@ -1,4 +1,4 @@
-package com.imdbapp.Exceptions;
+package com.imdbapp.exceptions;
 
 public class ApiCallFailedException extends RuntimeException {
     public String msg;

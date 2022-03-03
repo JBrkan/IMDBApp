@@ -1,4 +1,4 @@
-package com.imdbapp.Exceptions;
+package com.imdbapp.exceptions;
 
 import java.util.List;
 

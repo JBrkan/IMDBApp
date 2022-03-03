@@ -1,7 +1,5 @@
-package com.imdbapp.DataModels.DatabaseModel;
+package com.imdbapp.datamodels.databasemodel;
 
-
-import org.springframework.context.annotation.Bean;
 
 import javax.persistence.*;
 import java.util.HashSet;
