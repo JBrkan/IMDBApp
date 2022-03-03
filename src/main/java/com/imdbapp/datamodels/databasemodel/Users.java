@@ -3,6 +3,7 @@ package com.imdbapp.datamodels.databasemodel;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -22,6 +23,15 @@ public class Users{
             inverseJoinColumns = { @JoinColumn(name = "movie_id") }
     )
     private Set<Movies> movies = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "friends",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "friend_id")}
+    )
+    private Set<Users> friends = new HashSet<>();
+    @Transient
+    boolean checked;
 
     public Users(){}
 
@@ -32,12 +42,44 @@ public class Users{
         this.roles = roles;
     }
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public void setMovies(Set<Movies> movies) {
+        this.movies = movies;
+    }
+
+    public Set<Users> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<Users> friends) {
+        this.friends = friends;
+    }
+
     public Set<Movies> getMovies() {
         return movies;
     }
 
     public void addMovies(Set<Movies> movies){
         this.movies.addAll(movies);
+    }
+
+    public void addFriends(List<Users> friends){
+        this.friends.addAll(friends);
     }
 
     public String getUserName() {

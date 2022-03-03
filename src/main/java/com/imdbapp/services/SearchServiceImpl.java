@@ -6,9 +6,6 @@ import com.imdbapp.datamodels.imdbapicallsearchmodel.Result;
 import com.imdbapp.datamodels.imdbapicallsearchmodel.SearchResults;
 import com.imdbapp.exceptions.ApiCallFailedException;
 import com.imdbapp.exceptions.UserDoesntExistException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,18 +19,17 @@ import java.util.stream.Collectors;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    final static String apiKey = "k_qlcwkit9";
-    final static String URI = "https://imdb-api.com/en/API/SearchMovie/";
-    public RestTemplate restTemplate;
-    public HttpEntity<HttpHeaders> httpEntity;
-    public UserRepository userRepository;
+    private final static String apiKey = "k_qlcwkit9";
+    private final static String URI = "https://imdb-api.com/en/API/SearchMovie/";
+    private final RestTemplate restTemplate;
+    private final UserRepository userRepository;
 
 
 
-    public SearchServiceImpl(RestTemplate restTemplate,HttpEntity<HttpHeaders> httpEntity,
+    public SearchServiceImpl(RestTemplate restTemplate,
                              UserRepository userRepository){
         this.restTemplate = restTemplate;
-        this.httpEntity = httpEntity;
+
         this.userRepository = userRepository;
     }
 
@@ -42,17 +38,16 @@ public class SearchServiceImpl implements SearchService {
 
         String SearchURI = URI + apiKey +"/"+ title;
 
-        ResponseEntity<SearchResults> responseEntity = restTemplate.exchange(SearchURI, HttpMethod.GET, httpEntity, SearchResults.class);
-
+        ResponseEntity<SearchResults> responseEntity = restTemplate.getForEntity(SearchURI, SearchResults.class);
+        if(!responseEntity.hasBody()){
+            throw new ApiCallFailedException("Api call failed");
+        }
         SearchResults searchResults = responseEntity.getBody();
 
 
         Users users = userRepository.findByUserName(userName).orElseThrow(()-> new UserDoesntExistException("No User"));
         Set<Movies> moviesWatchedSet = users.getMovies();
 
-        if(searchResults == null){
-            throw new ApiCallFailedException("Api call returned 0 results");
-        }
             searchResults.getResults().forEach((movie) -> {
                 for (Movies movieWatched : moviesWatchedSet) {
                     if (movie.id.equals(movieWatched.getImdbMovieId())) {

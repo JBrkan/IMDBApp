@@ -14,26 +14,23 @@ import java.util.List;
 @ControllerAdvice
 public class ImdbAppControllerAdvice {
 
-
+    @ExceptionHandler(NoCheckBoxSelectionException.class)
+    public String handleNoCheckBoxSelectionException(Model model, NoCheckBoxSelectionException noCheckBoxSelectionException){
+        final String msg = noCheckBoxSelectionException.msg;
+        model.addAttribute("msg", msg);
+        return "search";
+    }
     @ExceptionHandler(ApiCallFailedException.class)
     public String handleCallFailedException(Model model, ApiCallFailedException apiCallFailedException){
         final String msg = apiCallFailedException.msg;
         model.addAttribute("msg",msg);
         return "error";
     }
-    @ExceptionHandler(UserFormValidationException.class)
-    public String handleUserUserFormValidation(Model model, UserFormValidationException userFormValidationException){
-        final List<String> msgList = userFormValidationException.errors;
-        model.addAttribute("newUser",new Users());
-        model.addAttribute("msgList",msgList);
-        return "register";
-    }
     @ExceptionHandler(UserDoesntExistException.class)
-    public String handleUserDoesntExistException(Model model, UserDoesntExistException userDoesntExistException){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        authentication.setAuthenticated(false);
+    public String handleUserDoesntExistException(){
         return "redirect:/logout";
     }
+
 
 
 

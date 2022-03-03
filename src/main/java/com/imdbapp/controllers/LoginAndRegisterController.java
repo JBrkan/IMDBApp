@@ -1,6 +1,7 @@
 package com.imdbapp.controllers;
 
 import com.imdbapp.datamodels.databasemodel.Users;
+import com.imdbapp.exceptions.UserFormValidationException;
 import com.imdbapp.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginAndRegisterController {
 
-    UserService userService;
+    private final UserService userService;
 
     public LoginAndRegisterController(UserService userService) {
         this.userService = userService;
@@ -33,22 +34,19 @@ public class LoginAndRegisterController {
         return "register";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        authentication.setAuthenticated(false);
-        return "redirect:/login";
-    }
-
-
 
     @PostMapping("/register/add")
     public String registerUser(Model model,@ModelAttribute("newUser") Users user){
 
-        userService.addNewUser(user);
-        model.addAttribute("msg", "Successfully registered");
-        return "login";
+        try{
+            userService.addNewUser(user);
+            model.addAttribute("msg", "Successfully registered");
+            return "login";
+        }catch(UserFormValidationException ex){
+            model.addAttribute("newUser", new Users());
+            model.addAttribute("msgList", ex.errors);
+            return "register";
+        }
     }
 
 

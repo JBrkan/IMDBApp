@@ -8,7 +8,6 @@ import com.imdbapp.services.UserRepository;
 import com.imdbapp.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +16,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class WebController {
 
-    public SearchService searchService;
-    public UserRepository userRepository;
-    public PasswordEncoder passwordEncoder;
-    public UserService userService;
+    private final SearchService searchService;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
 
 
-    public WebController(SearchService searchService, UserRepository userRepository,
-                         PasswordEncoder passwordEncoder, UserService userService)
+    public WebController(SearchService searchService, UserRepository userRepository
+                         , UserService userService)
     {this.searchService = searchService;
     this.userRepository = userRepository;
-    this.passwordEncoder = passwordEncoder;
     this.userService = userService;
     }
 
@@ -53,18 +50,23 @@ public class WebController {
     @GetMapping("/search/results")
     public String searchMovie(Model model, @RequestParam("title")String title){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("userInfo", authentication.getName() );
+        if(title.isEmpty()){
+            model.addAttribute("userInfo", authentication.getName());
+            model.addAttribute("movieList", new SearchResults());
+            return "search";
+        }
+        model.addAttribute("userInfo", authentication.getName());
         model.addAttribute("movieList", searchService.Search(title, authentication.getName()));
         return "search";
     }
 
 
     @PostMapping("/add")
-    public String addMovie(@ModelAttribute("movieList") SearchResults searchResults ){
-
+    public String addMovie(@ModelAttribute("movieList") SearchResults searchResults,Model model){
+        model.addAttribute("title", "");
         userService.addSelectedMovies(searchResults);
 
-        return "redirect:/api/home";
+        return "redirect:/api/search";
     }
 
 
