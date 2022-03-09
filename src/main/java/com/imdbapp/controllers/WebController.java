@@ -69,9 +69,9 @@ public class WebController {
 
 
     @PostMapping("/add")
-    public String addMovie(@ModelAttribute("movieList") SearchResults searchResults,Model model){
+    public String addMovie(@ModelAttribute("movieList") SearchResults searchResults,Model model, Principal loggedUser){
         model.addAttribute("title", "");
-        userService.addSelectedMovies(searchResults);
+        userService.addSelectedMovies(searchResults, loggedUser.getName());
         return "redirect:/api/search";
     }
 

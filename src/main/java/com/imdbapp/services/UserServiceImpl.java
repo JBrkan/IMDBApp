@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -67,14 +68,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void addSelectedMovies(SearchResults searchResults){
+    public void addSelectedMovies(SearchResults searchResults, String loggedUser){
         if(searchResults.getResults().isEmpty()){
             throw new NoCheckBoxSelectionException("");
         }
         searchResults.getResults().removeIf(result -> !result.getChecked());
         Set<Movies> moviesSet = new HashSet<>(searchService.convertResultsToMovies(searchResults.getResults()));
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Users users = userRepository.findByUserName(authentication.getName()).orElseThrow(()-> new UserDoesntExistException("Your account has been removed"));
+        Users users = userRepository.findByUserName(loggedUser).orElseThrow(()-> new UserDoesntExistException("Your account has been removed"));
         users.addMovies(moviesSet);
         userRepository.save(users);
     }

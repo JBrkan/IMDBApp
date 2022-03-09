@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface UserFriendsRepository extends JpaRepository<UsersFriends, UsersFriendsId> {
     List<UsersFriends> findByUsersFriendsId_RequesterName(String username);
+    List<UsersFriends> findByUsersFriendsId_AccepterName(String username);
 }

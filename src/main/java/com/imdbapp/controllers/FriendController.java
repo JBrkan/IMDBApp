@@ -5,11 +5,13 @@ import com.imdbapp.exceptions.UserDoesntExistException;
 import com.imdbapp.services.FriendService;
 import com.imdbapp.services.UserRepository;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 
 @Controller
@@ -34,7 +36,7 @@ public class FriendController {
     @GetMapping("/friends")
     public String getFriendList(Model model, Principal loggedUser){
         model.addAttribute("userInfo", loggedUser.getName());
-        model.addAttribute("friends", userRepository.findByUserName(loggedUser.getName()).orElseThrow(() -> new UserDoesntExistException("Your account has been removed")));
+        model.addAttribute("friends", friendService.fetchFriends(loggedUser.getName()));
         return "friends";
     }
     @PostMapping("friends/addFriend")

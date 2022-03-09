@@ -41,4 +41,9 @@ public class FriendServiceImpl implements FriendService{
         }
 
     }
+    @Override
+    public List<Users> fetchFriends(String username){
+        userFriendsRepository.findByUsersFriendsId_RequesterName(username);
+        return new ArrayList<>();
+    }
 }
