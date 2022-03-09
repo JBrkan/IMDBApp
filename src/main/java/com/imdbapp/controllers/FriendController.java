@@ -4,12 +4,12 @@ import com.imdbapp.datamodels.UserWrapper;
 import com.imdbapp.exceptions.UserDoesntExistException;
 import com.imdbapp.services.FriendService;
 import com.imdbapp.services.UserRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 
 
 @Controller
@@ -25,25 +25,21 @@ public class FriendController {
     }
 
     @GetMapping("/friends/search")
-    public String searchForFriends(Model model, @RequestParam("username")String username){
+    public String searchForFriends(Principal loggedUser, Model model, @RequestParam("username")String username){
+        model.addAttribute("userInfo", loggedUser.getName());
         model.addAttribute("UserWrapper", friendService.findFriends(username) );
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("userInfo", authentication.getName());
         return "friendSearch";
     }
 
     @GetMapping("/friends")
-    public String getFriendList(Model model){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("friends", userRepository.findByUserName(authentication.getName()).orElseThrow(() -> new UserDoesntExistException("Your account has been removed")));
+    public String getFriendList(Model model, Principal loggedUser){
+        model.addAttribute("userInfo", loggedUser.getName());
+        model.addAttribute("friends", userRepository.findByUserName(loggedUser.getName()).orElseThrow(() -> new UserDoesntExistException("Your account has been removed")));
         return "friends";
     }
     @PostMapping("friends/addFriend")
-    public String addFriend(@ModelAttribute("UserWrapper") UserWrapper friends){
-
-        friendService.addNewFriend(friends);
-        return "redirect:/friends/search";
-
-
+    public String addFriend(Principal loggedUser, @ModelAttribute("UserWrapper") UserWrapper friends){
+        friendService.addNewFriend(friends, loggedUser.getName());
+        return "redirect:/api/friends";
     }
 }

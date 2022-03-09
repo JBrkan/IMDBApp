@@ -6,5 +6,5 @@ import com.imdbapp.datamodels.databasemodel.Users;
 
 public interface FriendService {
     UserWrapper findFriends(String username);
-    void addNewFriend(UserWrapper userWrapper);
+    void addNewFriend(UserWrapper userWrapper, String loggedUser);
 }

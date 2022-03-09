@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class SearchServiceImpl implements SearchService {
 
-    private final static String apiKey = "k_qlcwkit9";
+    private final static String API_KEY = "k_qlcwkit9";
     private final static String URI = "https://imdb-api.com/en/API/SearchMovie/";
     private final RestTemplate restTemplate;
     private final UserRepository userRepository;
@@ -29,14 +29,13 @@ public class SearchServiceImpl implements SearchService {
     public SearchServiceImpl(RestTemplate restTemplate,
                              UserRepository userRepository){
         this.restTemplate = restTemplate;
-
         this.userRepository = userRepository;
     }
 
     @Override
     public SearchResults Search(String title, String userName) {
 
-        String SearchURI = URI + apiKey +"/"+ title;
+        String SearchURI = URI + API_KEY +"/"+ title;
 
         ResponseEntity<SearchResults> responseEntity = restTemplate.getForEntity(SearchURI, SearchResults.class);
         if(!responseEntity.hasBody()){

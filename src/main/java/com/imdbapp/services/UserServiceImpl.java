@@ -1,7 +1,6 @@
 package com.imdbapp.services;
 
 
-import com.imdbapp.datamodels.AuthUserDetails;
 import com.imdbapp.datamodels.databasemodel.Movies;
 import com.imdbapp.datamodels.databasemodel.Users;
 import com.imdbapp.datamodels.imdbapicallsearchmodel.SearchResults;
@@ -26,7 +25,7 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final SearchService searchService;
-    private final static Pattern checkPattern = Pattern.compile("[^a-zA-Z0-9]");
+    private final static Pattern CHECK_PATTERN = Pattern.compile("[^a-zA-Z0-9]");
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, SearchService searchService){
         this.userRepository= userRepository;
@@ -43,12 +42,12 @@ public class UserServiceImpl implements UserService{
         if(userRepository.findByUserName(user.getUserName()).isPresent()) {
             errors.add("Username already taken");
         }
-        match= checkPattern.matcher(user.getUserName());
+        match= CHECK_PATTERN.matcher(user.getUserName());
         check = match.find();
         if(user.getUserName().length()< 5 || check){
             errors.add("Username should be at least 5 characters long and contain no special characters");
         }
-        match = checkPattern.matcher(user.getPassWord());
+        match = CHECK_PATTERN.matcher(user.getPassWord());
         check = match.find();
         if(user.getPassWord().length() < 5 || check){
             errors.add("Password should be at least 5 characters long and contain no special characters");

@@ -11,4 +11,5 @@ public interface UserService {
     void addNewUser(Users users);
     Set<Movies> fetchWatchedMovies(Users users);
     void addSelectedMovies(SearchResults searchResults);
+
 }

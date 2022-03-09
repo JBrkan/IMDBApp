@@ -4,10 +4,10 @@ import java.util.List;
 
 
 public class SearchResults {
-    public String searchType;
-    public String expression;
-    public List<Result> results;
-    public String errorMessage;
+    private String searchType;
+    private String expression;
+    private List<Result> results;
+    private String errorMessage;
 
 
     public String getSearchType() {

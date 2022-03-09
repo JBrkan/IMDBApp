@@ -2,7 +2,9 @@ package com.imdbapp.datamodels;
 
 import com.imdbapp.datamodels.databasemodel.Users;
 
+
 import java.util.List;
+
 
 public class UserWrapper {
     private List<Users> users;

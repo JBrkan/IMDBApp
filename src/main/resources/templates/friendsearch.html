@@ -47,7 +47,7 @@
                 <tr th:each="friend, index : *{users}">
                     <td th:text="${friend.userName}"></td>
                     <td>
-                        <input type="hidden" th:field="*{users[__${index.index}__].userId}">
+                        <input type="hidden" th:field="*{users[__${index.index}__].userName}">
                         <input type="checkbox" th:field="*{users[__${index.index}__].checked}">
                     </td>
                 </tr>
