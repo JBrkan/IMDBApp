@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface UserFriendsRepository extends JpaRepository<UsersFriends, UsersFriendsId> {
     List<UsersFriends> findByUsersFriendsId_RequesterId(Long id);
+
     List<UsersFriends> findByUsersFriendsId_AccepterId(Long id);
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +43,7 @@ public class FriendServiceImpl implements FriendService {
         }
 
     }
+
     @Override
     public List<Users> fetchFriends(String username) {
         Users user = userRepository.findByUserName(username).orElseThrow(() -> new UserDoesntExistException("Your account has been removed"));
@@ -57,18 +57,20 @@ public class FriendServiceImpl implements FriendService {
 
         return friends;
     }
+
     @Override
-    public List<Users> fetchRequests(String username){
+    public List<Users> fetchRequests(String username) {
         Users user = userRepository.findByUserName(username).orElseThrow(() -> new UserDoesntExistException("Your account has been removed"));
         List<UsersFriends> usersFriends = userFriendsRepository.findByUsersFriendsId_AccepterId(user.getUserId());
         usersFriends.removeIf(friend -> friend.getRelationship().equals("FRIENDS"));
         return usersFriends.stream().map(UsersFriends::getRequester).collect(Collectors.toList());
     }
+
     @Override
-    public void acceptRequest(Long friendId, Long loggedUserId){
+    public void acceptRequest(Long friendId, Long loggedUserId) {
         List<UsersFriends> requests = userFriendsRepository.findByUsersFriendsId_AccepterId(loggedUserId);
         requests.forEach((request) -> {
-            if(request.getUsersFriendsId().getRequesterId() == friendId){
+            if (request.getUsersFriendsId().getRequesterId() == friendId) {
                 request.setRelationship("FRIENDS");
             }
         });

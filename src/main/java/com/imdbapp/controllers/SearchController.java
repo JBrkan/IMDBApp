@@ -1,7 +1,6 @@
 package com.imdbapp.controllers;
 
 
-
 import com.imdbapp.datamodels.imdbapicallsearchmodel.SearchResults;
 import com.imdbapp.exceptions.UserDoesntExistException;
 import com.imdbapp.services.SearchService;
@@ -10,8 +9,8 @@ import com.imdbapp.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.security.Principal;
 
+import java.security.Principal;
 
 
 @Controller
@@ -21,7 +20,6 @@ public class SearchController {
     private final SearchService searchService;
     private final UserRepository userRepository;
     private final UserService userService;
-
 
 
     public SearchController(SearchService searchService, UserRepository userRepository

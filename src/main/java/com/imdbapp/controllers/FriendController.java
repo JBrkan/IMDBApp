@@ -3,12 +3,11 @@ package com.imdbapp.controllers;
 import com.imdbapp.datamodels.AuthUserDetails;
 import com.imdbapp.datamodels.UserWrapper;
 import com.imdbapp.services.FriendService;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.security.Principal;
 
 
@@ -38,7 +37,7 @@ public class FriendController {
     }
 
     @GetMapping("/friends/accept")
-    public String acceptRequest(@RequestParam("userId") Long friendId, @AuthenticationPrincipal AuthUserDetails userDetails){
+    public String acceptRequest(@RequestParam("userId") Long friendId, @AuthenticationPrincipal AuthUserDetails userDetails) {
         friendService.acceptRequest(friendId, userDetails.getUserId());
         return "redirect:/api/friends";
     }

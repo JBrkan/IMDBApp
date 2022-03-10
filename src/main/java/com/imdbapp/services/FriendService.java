@@ -12,6 +12,8 @@ public interface FriendService {
     void addNewFriend(UserWrapper userWrapper, String loggedUser);
 
     List<Users> fetchFriends(String username);
+
     List<Users> fetchRequests(String username);
+
     void acceptRequest(Long friendId, Long loggedUserId);
 }
