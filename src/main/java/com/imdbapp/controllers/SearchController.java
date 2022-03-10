@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-
 @Controller
 @RequestMapping("/api")
 public class SearchController {

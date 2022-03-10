@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 
 @Controller
 @RequestMapping("/api")
@@ -22,9 +20,9 @@ public class FriendController {
     }
 
     @GetMapping("/friends/search")
-    public String searchForFriends(Principal loggedUser, Model model, @RequestParam("username") String username) {
-        model.addAttribute("userInfo", loggedUser.getName());
-        model.addAttribute("UserWrapper", friendService.findFriends(username, loggedUser.getName()));
+    public String searchForFriends(Model model, @RequestParam("username") String username, @AuthenticationPrincipal AuthUserDetails userDetails) {
+        model.addAttribute("userInfo", userDetails.getUsername());
+        model.addAttribute("UserWrapper", friendService.findFriends(username, userDetails.getUsername()));
         return "friendSearch";
     }
 
