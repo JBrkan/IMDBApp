@@ -29,10 +29,10 @@ public class FriendController {
     }
 
     @GetMapping("/friends")
-    public String getFriendList(Model model, Principal loggedUser) {
-        model.addAttribute("userInfo", loggedUser.getName());
-        model.addAttribute("friends", friendService.fetchFriends(loggedUser.getName()));
-        model.addAttribute("requests", friendService.fetchRequests(loggedUser.getName()));
+    public String getFriendList(Model model, @AuthenticationPrincipal AuthUserDetails userDetails) {
+        model.addAttribute("userInfo", userDetails.getUsername());
+        model.addAttribute("friends", friendService.fetchFriends(userDetails.getUsername()));
+        model.addAttribute("requests", friendService.fetchRequests(userDetails.getUsername()));
         return "friends";
     }
 
@@ -43,8 +43,8 @@ public class FriendController {
     }
 
     @PostMapping("friends/addFriend")
-    public String addFriend(Principal loggedUser, @ModelAttribute("UserWrapper") UserWrapper friends) {
-        friendService.addNewFriend(friends, loggedUser.getName());
+    public String addFriend(@ModelAttribute("UserWrapper") UserWrapper friends, @AuthenticationPrincipal AuthUserDetails userDetails) {
+        friendService.addNewFriend(friends, userDetails.getUsername());
         return "redirect:/api/friends";
     }
 
