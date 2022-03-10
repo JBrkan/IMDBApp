@@ -12,18 +12,24 @@ import java.util.stream.Collectors;
 
 public class AuthUserDetails implements UserDetails {
 
+    private final Long userId;
     private final String password;
     private final String username;
     private final List<GrantedAuthority> authorities;
     private final boolean enabled;
 
     public AuthUserDetails(Users user) {
+        this.userId = user.getUserId();
         this.username = user.getUserName();
         this.password = user.getPassWord();
         this.authorities = Arrays.stream(user.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
         this.enabled = user.isEnabled();
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     @Override

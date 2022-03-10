@@ -1,12 +1,14 @@
 package com.imdbapp.controllers;
 
+import com.imdbapp.datamodels.AuthUserDetails;
 import com.imdbapp.datamodels.UserWrapper;
 import com.imdbapp.services.FriendService;
-import com.imdbapp.services.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 
 
@@ -14,11 +16,9 @@ import java.security.Principal;
 @RequestMapping("/api")
 public class FriendController {
 
-    private final UserRepository userRepository;
     private final FriendService friendService;
 
-    public FriendController(UserRepository userRepository, FriendService friendService) {
-        this.userRepository = userRepository;
+    public FriendController(FriendService friendService) {
         this.friendService = friendService;
     }
 
@@ -33,7 +33,14 @@ public class FriendController {
     public String getFriendList(Model model, Principal loggedUser) {
         model.addAttribute("userInfo", loggedUser.getName());
         model.addAttribute("friends", friendService.fetchFriends(loggedUser.getName()));
+        model.addAttribute("requests", friendService.fetchRequests(loggedUser.getName()));
         return "friends";
+    }
+
+    @GetMapping("/friends/accept")
+    public String acceptRequest(@RequestParam("userId") Long friendId, @AuthenticationPrincipal AuthUserDetails userDetails){
+        friendService.acceptRequest(friendId, userDetails.getUserId());
+        return "redirect:/api/friends";
     }
 
     @PostMapping("friends/addFriend")
@@ -41,4 +48,6 @@ public class FriendController {
         friendService.addNewFriend(friends, loggedUser.getName());
         return "redirect:/api/friends";
     }
+
+
 }

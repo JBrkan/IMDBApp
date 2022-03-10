@@ -23,5 +23,4 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     @Query(value = "insert into users_friends VALUES(?1, ?2, ?3, ?4)", nativeQuery = true)
     void addFriendship(Long accepter, Long requester, Date befriended, String relationship);
 
-
 }
