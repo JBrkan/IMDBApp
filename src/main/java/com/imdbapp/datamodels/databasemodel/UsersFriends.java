@@ -9,12 +9,12 @@ public class UsersFriends implements Serializable {
     @EmbeddedId
     private UsersFriendsId usersFriendsId;
     @ManyToOne
-    @JoinColumn(name="requester")
-    @MapsId("requesterName")
+    @JoinColumn(name = "requester")
+    @MapsId("requesterId")
     private Users requester;
     @ManyToOne
-    @JoinColumn(name="accepter")
-    @MapsId("accepterName")
+    @JoinColumn(name = "accepter")
+    @MapsId("accepterId")
     private Users accepter;
     private String relationship;
     private Date dateBefriended;

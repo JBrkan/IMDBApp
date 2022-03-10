@@ -17,7 +17,7 @@ public class AuthUserDetails implements UserDetails {
     private final List<GrantedAuthority> authorities;
     private final boolean enabled;
 
-    public AuthUserDetails(Users user){
+    public AuthUserDetails(Users user) {
         this.username = user.getUserName();
         this.password = user.getPassWord();
         this.authorities = Arrays.stream(user.getRoles().split(","))

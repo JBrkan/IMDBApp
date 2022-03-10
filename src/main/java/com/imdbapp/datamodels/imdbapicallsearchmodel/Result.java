@@ -3,11 +3,11 @@ package com.imdbapp.datamodels.imdbapicallsearchmodel;
 public class Result {
 
 
-    public String id;
-    public String image;
-    public String title;
-    public Boolean checked = false;
-    public boolean watched = false;
+    private String id;
+    private String image;
+    private String title;
+    private Boolean checked = false;
+    private boolean watched = false;
 
     public String getId() {
         return id;

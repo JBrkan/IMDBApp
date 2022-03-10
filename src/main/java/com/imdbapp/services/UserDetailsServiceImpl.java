@@ -14,14 +14,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     final private UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository){
+    public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return new AuthUserDetails(userRepository.findByUserName(username).orElseThrow(() ->new UserDoesntExistException("Your account has been removed")));
+        return new AuthUserDetails(userRepository.findByUserName(username).orElseThrow(() -> new UserDoesntExistException("Your account has been removed")));
 
     }
 }

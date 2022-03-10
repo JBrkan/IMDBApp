@@ -7,7 +7,9 @@ import java.util.List;
 
 
 public interface FriendService {
-    UserWrapper findFriends(String username);
+    UserWrapper findFriends(String username, String loggedUser);
+
     void addNewFriend(UserWrapper userWrapper, String loggedUser);
+
     List<Users> fetchFriends(String username);
 }

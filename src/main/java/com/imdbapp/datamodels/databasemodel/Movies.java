@@ -1,23 +1,27 @@
 package com.imdbapp.datamodels.databasemodel;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Movies {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long movieId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long movieId;
     private String imdbMovieId;
     private String movieName;
     private String movieImage;
 
 
-    public Movies(){}
+    public Movies() {
+    }
 
     public Movies(String imdbMovieId, String movieName, String movieImage) {
 
-        this.imdbMovieId= imdbMovieId;
+        this.imdbMovieId = imdbMovieId;
         this.movieName = movieName;
         this.movieImage = movieImage;
     }

@@ -9,17 +9,19 @@ import java.util.stream.Collectors;
 
 
 @Entity
-public class Users{
+public class Users {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long userId;
     private String userName;
     private String passWord;
     private boolean enabled;
     private String roles;
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_movies",
-            joinColumns = { @JoinColumn(name = "user_name") },
-            inverseJoinColumns = { @JoinColumn(name = "movie_id") }
+            joinColumns = {@JoinColumn(name = "user_name")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
     )
     private Set<Movies> movies = new HashSet<>();
     @OneToMany(mappedBy = "requester")
@@ -28,9 +30,10 @@ public class Users{
     private List<UsersFriends> accepted;
 
     @Transient
-    private Boolean checked=false;
+    private Boolean checked = false;
 
-    public Users(){}
+    public Users() {
+    }
 
     public Users(String userName, String passWord, boolean enabled, String roles) {
         this.userName = userName;
@@ -39,25 +42,28 @@ public class Users{
         this.roles = roles;
     }
 
-    public List<Users> getFriends(){
+    public List<Users> getFriends() {
         return this.requested.stream().map(UsersFriends::getRequester).collect(Collectors.toList());
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public boolean getChecked() {
         return checked;
     }
 
-    public void setChecked(boolean checked) {
+    public void setChecked(Boolean checked) {
         this.checked = checked;
     }
 
-    public void setMovies(Set<Movies> movies) {
-        this.movies = movies;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public List<UsersFriends> getRequested() {
@@ -80,15 +86,21 @@ public class Users{
         return movies;
     }
 
-    public void addMovies(Set<Movies> movies){
-        this.movies.addAll(movies);
+    public void setMovies(Set<Movies> movies) {
+        this.movies = movies;
     }
 
+    public void addMovies(Set<Movies> movies) {
+        this.movies.addAll(movies);
+    }
 
     public String getUserName() {
         return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getPassWord() {
         return passWord;

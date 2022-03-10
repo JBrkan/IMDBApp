@@ -21,21 +21,21 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     UserDetailsService userDetailsService;
 
-    public SpringSecurityConfig(@Qualifier("UserDetailsServiceImpl") UserDetailsService userDetailsService){
+    public SpringSecurityConfig(@Qualifier("UserDetailsServiceImpl") UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userDetailsService);
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
-   }
+    }
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) {
-      auth.authenticationProvider(authenticationProvider());
+        auth.authenticationProvider(authenticationProvider());
 
     }
 

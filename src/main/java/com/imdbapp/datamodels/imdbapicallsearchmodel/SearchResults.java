@@ -42,7 +42,7 @@ public class SearchResults {
         this.errorMessage = errorMessage;
     }
 
-    public boolean resultsIsNull(){
+    public boolean resultsIsNull() {
         return this.results.isEmpty();
     }
 }

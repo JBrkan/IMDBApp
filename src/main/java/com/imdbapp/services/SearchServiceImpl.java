@@ -25,9 +25,8 @@ public class SearchServiceImpl implements SearchService {
     private final UserRepository userRepository;
 
 
-
     public SearchServiceImpl(RestTemplate restTemplate,
-                             UserRepository userRepository){
+                             UserRepository userRepository) {
         this.restTemplate = restTemplate;
         this.userRepository = userRepository;
     }
@@ -35,38 +34,38 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public SearchResults Search(String title, String userName) {
 
-        String SearchURI = URI + API_KEY +"/"+ title;
+        String SearchURI = URI + API_KEY + "/" + title;
 
         ResponseEntity<SearchResults> responseEntity = restTemplate.getForEntity(SearchURI, SearchResults.class);
-        if(!responseEntity.hasBody()){
+        if (!responseEntity.hasBody()) {
             throw new ApiCallFailedException("Api call failed");
         }
         SearchResults searchResults = responseEntity.getBody();
 
 
-        Users users = userRepository.findByUserName(userName).orElseThrow(()-> new UserDoesntExistException("No User"));
+        Users users = userRepository.findByUserName(userName).orElseThrow(() -> new UserDoesntExistException("No User"));
         Set<Movies> moviesWatchedSet = users.getMovies();
 
-            searchResults.getResults().forEach((movie) -> {
-                for (Movies movieWatched : moviesWatchedSet) {
-                    if (movie.id.equals(movieWatched.getImdbMovieId())) {
-                        movie.setWatched(true);
-                    }
+        searchResults.getResults().forEach((movie) -> {
+            for (Movies movieWatched : moviesWatchedSet) {
+                if (movie.getId().equals(movieWatched.getImdbMovieId())) {
+                    movie.setWatched(true);
                 }
-            });
+            }
+        });
 
 
-        List<Result> resultList= searchResults.getResults().stream().sorted(Comparator.comparing(Result::isWatched)).collect(Collectors.toList());
+        List<Result> resultList = searchResults.getResults().stream().sorted(Comparator.comparing(Result::isWatched)).collect(Collectors.toList());
         searchResults.setResults(resultList);
         return searchResults;
     }
 
     @Override
-    public Set<Movies> convertResultsToMovies(List<Result> resultList){
+    public Set<Movies> convertResultsToMovies(List<Result> resultList) {
 
         Set<Movies> moviesSet = new HashSet<>();
-        for(Result result: resultList){
-            moviesSet.add(new Movies(result.id,result.title,result.image));
+        for (Result result : resultList) {
+            moviesSet.add(new Movies(result.getId(), result.getTitle(), result.getImage()));
         }
 
         return moviesSet;
